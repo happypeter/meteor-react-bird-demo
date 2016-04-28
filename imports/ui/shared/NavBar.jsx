@@ -2,13 +2,17 @@ import React, { Component } from 'react';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 class NavBar extends Component {
+  handChange(value) {
+    console.log(value);
+  }
+
   render() {
     return (
       <div>
-        <Tabs>
-          <Tab label='Home' />
-          <Tab label='Sign Up' />
-          <Tab label='Log In' />
+        <Tabs onChange={ this.handChange.bind(this) }>
+          <Tab label='Home' value='/' />
+          <Tab label='Sign Up' value='/signup' />
+          <Tab label='Log In' value='/login' />
         </Tabs>
       </div>
     );
