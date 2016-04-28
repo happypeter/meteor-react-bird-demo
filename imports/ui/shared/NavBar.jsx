@@ -3,7 +3,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 class NavBar extends Component {
   handChange(value) {
-    console.log(value);
+    this.context.router.push(value);
   }
 
   render() {
@@ -20,7 +20,8 @@ class NavBar extends Component {
 }
 
 NavBar.contextTypes = {
-  muiTheme: React.PropTypes.object.isRequired
+  muiTheme: React.PropTypes.object.isRequired,
+  router: React.PropTypes.object.isRequired
 }
 
 export default NavBar;
