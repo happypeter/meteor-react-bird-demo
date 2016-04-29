@@ -7,6 +7,18 @@ class NavBar extends Component {
    this.state = {tabIndex: '/'};
  }
 
+ componentWillMount() {
+   this.setState({
+     tabIndex: this.getSelectedIndex()
+   });
+ }
+
+ getSelectedIndex() {
+   return this.context.router.isActive('/', true) ? '/' :
+     this.context.router.isActive('/signup') ? '/signup' :
+     this.context.router.isActive('/login') ? '/login' : '';
+ }
+
   handChange(value) {
     this.context.router.push(value);
     this.setState({tabIndex: value});
