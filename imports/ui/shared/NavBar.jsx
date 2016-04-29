@@ -13,6 +13,12 @@ class NavBar extends Component {
    });
  }
 
+ componentWillReceiveProps(nextProps) {
+   this.setState({
+     tabIndex: this.getSelectedIndex()
+   });
+ }
+
  getSelectedIndex() {
    return this.context.router.isActive('/', true) ? '/' :
      this.context.router.isActive('/signup') ? '/signup' :
