@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Radium from 'radium';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
 class NavBar extends Component {
@@ -33,6 +34,7 @@ class NavBar extends Component {
   render() {
     let styles = {
       root: {
+        flexShrink: '0',
         height: '64px',
         backgroundColor: '#00bcd4',
         boxShadow: '0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24)',
@@ -72,4 +74,4 @@ NavBar.contextTypes = {
   router: React.PropTypes.object.isRequired
 }
 
-export default NavBar;
+export default Radium(NavBar);
