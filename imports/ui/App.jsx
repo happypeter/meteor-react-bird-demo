@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import Radium, { StyleRoot } from 'radium';
+import AppBar from 'material-ui/AppBar';
 
 import NavBar from './shared/NavBar.jsx';
 
@@ -9,6 +10,14 @@ class App extends Component {
     return {
       muiTheme: getMuiTheme()
     };
+  }
+
+  componentWillMount() {
+    let setNavBarState = () => {
+      this.setState({renderNavBar: window.innerWidth > 700});
+    };
+    setNavBarState();
+    window.onresize = setNavBarState;
   }
 
   getStyles() {
@@ -27,7 +36,7 @@ class App extends Component {
     return (
       <StyleRoot>
         <div style={styles.root}>
-          <NavBar />
+          { this.state.renderNavBar ? <NavBar /> : <AppBar /> }
           { this.props.children }
         </div>
       </StyleRoot>
