@@ -4,6 +4,7 @@ import Radium, { StyleRoot } from 'radium';
 import AppBar from 'material-ui/AppBar';
 
 import NavBar from './shared/NavBar.jsx';
+import AppDrawer from './shared/AppDrawer.jsx';
 
 class App extends Component {
   getChildContext() {
@@ -36,11 +37,16 @@ class App extends Component {
     return (
       <StyleRoot>
         <div style={styles.root}>
-          { this.state.renderNavBar ? <NavBar /> : <AppBar /> }
+          { this.state.renderNavBar ? <NavBar /> : <AppBar onLeftIconButtonTouchTap={this.handleTouchTap.bind(this)} /> }
+          <AppDrawer ref='drawer' />
           { this.props.children }
         </div>
       </StyleRoot>
     );
+  }
+
+  handleTouchTap() {
+    this.refs.drawer.handleToggle();
   }
 }
 
