@@ -4,6 +4,9 @@ import Drawer from 'material-ui/Drawer';
 import { List, ListItem, MakeSelectable } from 'material-ui/List';
 const SelectableList = MakeSelectable(List);
 
+import { white, blue, pink } from '../styles/colors';
+import typography from '../styles/typography';
+
 class AppDrawer extends Component {
   constructor(props) {
     super(props);
@@ -34,17 +37,18 @@ class AppDrawer extends Component {
   render() {
     let styles = {
       header: {
-        fontSize: '24px',
-        color: '#fff',
+        fontFamily: typography.fontFamily,
+        fontSize: typography.fontMiddleSize,
+        color: white,
         lineHeight: '64px',
-        fontWeight: '300',
-        backgroundColor: '#00bcd4',
+        fontWeight: typography.fontWeightNormal,
+        backgroundColor: blue,
         paddingLeft: '24px',
         paddingTop: '0px',
         marginBottom: '8px',
       },
       selectedList: {
-        color: '#ff4081',
+        color: pink,
         backgroundColor: 'rgba(0, 0, 0, 0.03)',
       }
     };

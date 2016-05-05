@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import Radium from 'radium';
 
+import { white } from './styles/colors';
+import typography from './styles/typography';
+
 class Home extends Component {
   getStyles() {
     return {
@@ -16,10 +19,11 @@ class Home extends Component {
         justifyContent: 'center',
       },
       slogan: {
+        fontFamily: typography.fontFamily,
         textAlign: 'center',
-        color: '#fff',
+        color: white,
         textTransform: 'uppercase',
-        fontSize: '25px',
+        fontSize: typography.fontMiddleSize,
         fontWeight: '500',
         width: '100%',
         paddingTop: '50px',
