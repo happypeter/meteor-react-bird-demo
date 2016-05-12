@@ -2,10 +2,28 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from 'radium';
-
+import { Accounts } from 'meteor/accounts-base';
 import typography from './styles/typography';
 
 class SignUp extends Component {
+  handleSubmit(e) {
+    e.preventDefault();
+
+    let userName = this.refs.userName.getValue();
+    let password = this.refs.password.getValue();
+
+    Accounts.createUser({
+      username: userName,
+      password: password
+    }, (error) => {
+      if (error) {
+        console.log(error.reason);
+        return;
+      }
+      this.context.router.push('/account');
+    });
+  }
+
   getStyles() {
     return {
       root: {
@@ -45,12 +63,14 @@ class SignUp extends Component {
     let styles = this.getStyles();
     return (
       <div style={styles.root}>
-        <form style={styles.form}>
+        <form onSubmit={ this.handleSubmit.bind(this) } style={styles.form}>
           <TextField
+            ref="userName"
             style={styles.textField}
             floatingLabelText="用户名"
             floatingLabelStyle={styles.floatingLabel} />
           <TextField
+            ref="password"
             style={styles.textField}
             floatingLabelText="密码"
             floatingLabelStyle={styles.floatingLabel}
@@ -66,6 +86,10 @@ class SignUp extends Component {
     );
   }
 }
+
+SignUp.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default Radium(SignUp);
 
