@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Meteor } from 'meteor/meteor';
 import Radium from 'radium';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -6,28 +7,32 @@ import { white, blue } from '../styles/colors';
 import typography from '../styles/typography';
 
 class NavBar extends Component {
- constructor(props) {
-   super(props);
-   this.state = {tabIndex: '/'};
- }
+  constructor(props) {
+    super(props);
+    this.state = {tabIndex: '/'};
+  }
 
- componentWillMount() {
-   this.setState({
+  componentWillMount() {
+    console.log('will');
+    this.setState({
      tabIndex: this.getSelectedIndex()
-   });
- }
+    });
+  }
 
- componentWillReceiveProps(nextProps) {
-   this.setState({
-     tabIndex: this.getSelectedIndex()
-   });
- }
+  componentWillReceiveProps(nextProps) {
+    setTimeout(() => {
+      this.setState({
+        tabIndex: this.getSelectedIndex()
+      });
+    }, 0)
+  }
 
- getSelectedIndex() {
-   return this.context.router.isActive('/', true) ? '/' :
-     this.context.router.isActive('/signup') ? '/signup' :
-     this.context.router.isActive('/login') ? '/login' : '';
- }
+  getSelectedIndex() {
+    return this.context.router.isActive('/', true) ? '/' :
+      this.context.router.isActive('/signup') ? '/signup' :
+      this.context.router.isActive('/account') ? '/account' :
+      this.context.router.isActive('/login') ? '/login' : '';
+  }
 
   handChange(value) {
     this.context.router.push(value);
@@ -58,6 +63,8 @@ class NavBar extends Component {
         marginTop: '-4px',
       },
     };
+
+    let currentUser = Meteor.userId();
     return (
       <div style={styles.root}>
         <Tabs value={this.state.tabIndex} onChange={this.handChange.bind(this)}
@@ -65,7 +72,7 @@ class NavBar extends Component {
           inkBarStyle={styles.inkBar}
           tabItemContainerStyle={{backgroundColor: 'transparent'}}>
           <Tab label='Home' value='/' style={styles.tab} />
-          <Tab label='Sign Up' value='/signup' style={styles.tab} />
+          <Tab label={currentUser ? 'account' : 'sign up'} value={currentUser ? '/account' : '/signup'} style={styles.tab} />
           <Tab label='Log In' value='/login' style={styles.tab} />
         </Tabs>
       </div>
