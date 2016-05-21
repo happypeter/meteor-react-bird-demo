@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Meteor } from 'meteor/meteor';
 import Radium from 'radium';
 import { Tabs, Tab } from 'material-ui/Tabs';
 
@@ -64,7 +63,7 @@ class NavBar extends Component {
       },
     };
 
-    let currentUser = Meteor.userId();
+    let currentUser = this.props.currentUser;
     return (
       <div style={styles.root}>
         <Tabs value={this.state.tabIndex} onChange={this.handChange.bind(this)}
