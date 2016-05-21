@@ -4,10 +4,12 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from 'radium';
+import { Meteor } from 'meteor/meteor';
 
 import { HTTP } from 'meteor/http';
 import isEmpty from 'lodash/fp/isEmpty';
 import UserInfo from './user/UserInfo.jsx';
+import '../api/users.js';
 
 class Account extends Component {
   constructor(props) {
@@ -28,6 +30,17 @@ class Account extends Component {
       } else {
         this.setState({user: JSON.parse(res.content)})
       }
+    });
+  }
+
+  handleClick(e) {
+    e.preventDefault();
+    Meteor.call('update/user', this.state.user, (error) => {
+      if(error) {
+        console.log(error);
+        return;
+      }
+      this.context.router.push('/chat');
     });
   }
 
@@ -54,8 +67,9 @@ class Account extends Component {
           <UserInfo userInfo={this.state.user} />
           <RaisedButton
             style={{display: 'block', margin: '30px auto 0', width: '180px'}}
-            secondary={true}
-            label="save" />
+            primary={true}
+            label="save"
+            onClick={this.handleClick.bind(this)} />
         </div>
       );
     }
@@ -79,5 +93,9 @@ class Account extends Component {
     );
   }
 }
+
+Account.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default Radium(Account);
