@@ -5,6 +5,7 @@ import FlatButton from 'material-ui/FlatButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from 'radium';
 import { Meteor } from 'meteor/meteor';
+import { createContainer } from 'meteor/react-meteor-data';
 
 import { HTTP } from 'meteor/http';
 import isEmpty from 'lodash/fp/isEmpty';
@@ -61,6 +62,7 @@ class Account extends Component {
     };
 
     let GitHubInfo;
+    let currentUser = this.props.currentUser;
     if(!isEmpty(this.state.user)) {
       GitHubInfo = (
         <div>
@@ -71,6 +73,10 @@ class Account extends Component {
             label="save"
             onClick={this.handleClick.bind(this)} />
         </div>
+      );
+    } else if(currentUser && currentUser.avatar_url) {
+      GitHubInfo = (
+        <UserInfo userInfo={this.props.currentUser} />
       );
     }
 
@@ -98,4 +104,9 @@ Account.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default Radium(Account);
+export default createContainer(() => {
+  Meteor.subscribe('userInfo');
+  return {
+    currentUser: Meteor.user(),
+  };
+}, Radium(Account));
