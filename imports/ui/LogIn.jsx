@@ -2,9 +2,26 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from 'radium';
+import { Meteor } from 'meteor/meteor';
+
 import typography from './styles/typography';
 
 class LogIn extends Component {
+  handleSubmit(e) {
+    e.preventDefault();
+
+    let userName = this.refs.userName.getValue();
+    let password = this.refs.password.getValue();
+
+    Meteor.loginWithPassword({username: userName}, password, (error) => {
+      if (error) {
+        console.log(error);
+        return;
+      }
+      this.context.router.push('/chat');
+    });
+  }
+
   getStyles() {
     return {
       root: {
@@ -44,7 +61,7 @@ class LogIn extends Component {
     let styles = this.getStyles();
     return (
       <div style={styles.root}>
-        <form style={styles.form}>
+        <form onSubmit={this.handleSubmit.bind(this)} style={styles.form}>
           <TextField
             ref="userName"
             style={styles.textField}
@@ -67,5 +84,9 @@ class LogIn extends Component {
     );
   }
 }
+
+LogIn.contextTypes = {
+  router: React.PropTypes.object.isRequired
+};
 
 export default Radium(LogIn);

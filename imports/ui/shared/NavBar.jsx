@@ -12,7 +12,6 @@ class NavBar extends Component {
   }
 
   componentWillMount() {
-    console.log('will');
     this.setState({
      tabIndex: this.getSelectedIndex()
     });
@@ -30,6 +29,7 @@ class NavBar extends Component {
     return this.context.router.isActive('/', true) ? '/' :
       this.context.router.isActive('/signup') ? '/signup' :
       this.context.router.isActive('/account') ? '/account' :
+      this.context.router.isActive('/chat') ? '/chat' :
       this.context.router.isActive('/login') ? '/login' : '';
   }
 
@@ -72,7 +72,7 @@ class NavBar extends Component {
           tabItemContainerStyle={{backgroundColor: 'transparent'}}>
           <Tab label='Home' value='/' style={styles.tab} />
           <Tab label={currentUser ? 'account' : 'sign up'} value={currentUser ? '/account' : '/signup'} style={styles.tab} />
-          <Tab label='Log In' value='/login' style={styles.tab} />
+          <Tab label={currentUser ? 'chat' : 'log in'} value={currentUser ? '/chat' : '/login'} style={styles.tab} />
         </Tabs>
       </div>
     );
