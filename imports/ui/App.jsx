@@ -7,6 +7,7 @@ import { createContainer } from 'meteor/react-meteor-data';
 
 import NavBar from './shared/NavBar.jsx';
 import AppDrawer from './shared/AppDrawer.jsx';
+import LogOutMenu from './auth/LogOutMenu.jsx';
 
 class App extends Component {
   getChildContext() {
@@ -40,8 +41,8 @@ class App extends Component {
       <StyleRoot>
         <div style={styles.root}>
           { this.state.renderNavBar ? <NavBar currentUser={this.props.currentUser} userInfo={this.props.userInfo} /> :
-            <AppBar onLeftIconButtonTouchTap={this.handleTouchTap.bind(this)} /> }
-          <AppDrawer ref='drawer' />
+           (this.props.currentUser ? this.getLoginAppBar() : this.getAppBar()) }
+          <AppDrawer ref='drawer' currentUser={this.props.currentUser} />
           { this.props.children }
         </div>
       </StyleRoot>
@@ -50,6 +51,21 @@ class App extends Component {
 
   handleTouchTap() {
     this.refs.drawer.handleToggle();
+  }
+
+  getAppBar() {
+    return (
+      <AppBar onLeftIconButtonTouchTap={this.handleTouchTap.bind(this)} style={{flexShrink: 0}}/>
+    );
+  }
+
+  getLoginAppBar() {
+    return (
+      <AppBar onLeftIconButtonTouchTap={this.handleTouchTap.bind(this)}
+        style={{flexShrink: 0}}
+        iconStyleRight={{marginTop: 0}}
+        iconElementRight={<LogOutMenu username={this.props.userInfo ? this.props.userInfo.username : ''}/>}/>
+    );
   }
 }
 
