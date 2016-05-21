@@ -4,7 +4,30 @@ import TextField from 'material-ui/TextField';
 import FlatButton from 'material-ui/FlatButton';
 import Radium from 'radium';
 
+import { HTTP } from 'meteor/http';
+
 class Account extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    };
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    const username = this.refs.username.getValue();
+    const url = `https://api.github.com/users/${username}`;
+
+    HTTP.call('get', url, (error, res) => {
+      if(error) {
+        console.log(error);
+      } else {
+        this.setState({user: JSON.parse(res.content)})
+      }
+    });
+  }
+
   render() {
     let styles = {
       root: {
@@ -24,7 +47,7 @@ class Account extends Component {
     return (
       <div style={styles.root}>
         <Card style={styles.card}>
-          <form>
+          <form onSubmit={this.handleSubmit.bind(this)}>
             <TextField
               hintText="GitHub Account"
               ref='username'/>
