@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 
-import SignUp from '../../ui/SignUp.jsx';
-import LogIn from '../../ui/LogIn.jsx';
+import SignUp from '../../ui/auth/SignUp.jsx';
+import LogIn from '../../ui/auth/LogIn.jsx';
 import Home from '../../ui/Home.jsx';
 import App from '../../ui/App.jsx';
 import Account from '../../ui/Account.jsx';

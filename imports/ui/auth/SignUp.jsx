@@ -2,23 +2,26 @@ import React, { Component } from 'react';
 import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 import Radium from 'radium';
-import { Meteor } from 'meteor/meteor';
+import { Accounts } from 'meteor/accounts-base';
 
-import typography from './styles/typography';
+import typography from '../styles/typography';
 
-class LogIn extends Component {
+class SignUp extends Component {
   handleSubmit(e) {
     e.preventDefault();
 
     let userName = this.refs.userName.getValue();
     let password = this.refs.password.getValue();
 
-    Meteor.loginWithPassword({username: userName}, password, (error) => {
+    Accounts.createUser({
+      username: userName,
+      password: password
+    }, (error) => {
       if (error) {
-        console.log(error);
+        console.log(error.reason);
         return;
       }
-      this.context.router.push('/chat');
+      this.context.router.push('/account');
     });
   }
 
@@ -61,7 +64,7 @@ class LogIn extends Component {
     let styles = this.getStyles();
     return (
       <div style={styles.root}>
-        <form onSubmit={this.handleSubmit.bind(this)} style={styles.form}>
+        <form onSubmit={ this.handleSubmit.bind(this) } style={styles.form}>
           <TextField
             ref="userName"
             style={styles.textField}
@@ -77,7 +80,7 @@ class LogIn extends Component {
             style={styles.button}
             labelStyle={styles.label}
             type="submit"
-            label="登录"
+            label="注册"
             secondary={true} />
         </form>
       </div>
@@ -85,8 +88,9 @@ class LogIn extends Component {
   }
 }
 
-LogIn.contextTypes = {
+SignUp.contextTypes = {
   router: React.PropTypes.object.isRequired
 };
 
-export default Radium(LogIn);
+export default Radium(SignUp);
+
