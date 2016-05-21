@@ -4,6 +4,7 @@ import { Tabs, Tab } from 'material-ui/Tabs';
 
 import { white, blue } from '../styles/colors';
 import typography from '../styles/typography';
+import LogOutMenu from '../auth/LogOutMenu.jsx';
 
 class NavBar extends Component {
   constructor(props) {
@@ -74,6 +75,7 @@ class NavBar extends Component {
           <Tab label={currentUser ? 'account' : 'sign up'} value={currentUser ? '/account' : '/signup'} style={styles.tab} />
           <Tab label={currentUser ? 'chat' : 'log in'} value={currentUser ? '/chat' : '/login'} style={styles.tab} />
         </Tabs>
+        { currentUser ? <LogOutMenu username={this.props.userInfo ? this.props.userInfo.username: ''} /> : '' }
       </div>
     );
   }

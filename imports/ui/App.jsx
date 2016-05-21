@@ -39,7 +39,7 @@ class App extends Component {
     return (
       <StyleRoot>
         <div style={styles.root}>
-          { this.state.renderNavBar ? <NavBar currentUser={this.props.currentUser} /> :
+          { this.state.renderNavBar ? <NavBar currentUser={this.props.currentUser} userInfo={this.props.userInfo} /> :
             <AppBar onLeftIconButtonTouchTap={this.handleTouchTap.bind(this)} /> }
           <AppDrawer ref='drawer' />
           { this.props.children }
@@ -63,6 +63,7 @@ App.propTypes = {
 
 export default createContainer(() => {
   return {
-    currentUser: Meteor.userId()
+    currentUser: Meteor.userId(),
+    userInfo: Meteor.user()
   };
 }, Radium(App));
