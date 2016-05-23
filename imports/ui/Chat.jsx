@@ -3,6 +3,9 @@ import Radium from 'radium';
 import { createContainer } from 'meteor/react-meteor-data';
 
 import MessageForm from './messages/MessageForm.jsx';
+import MessageList from './messages/MessageList.jsx';
+
+import { Messages } from '../api/messages.js';
 
 class Chat extends Component {
   getStyles() {
@@ -31,6 +34,7 @@ class Chat extends Component {
     let styles = this.getStyles();
     return (
       <div style={styles.root}>
+        <MessageList messages={this.props.messages} />
         <MessageForm currentUser={this.props.currentUser}/>
       </div>
     );
@@ -39,7 +43,9 @@ class Chat extends Component {
 
 export default createContainer(() => {
   Meteor.subscribe('userInfo');
+  Meteor.subscribe("messages");
   return {
     currentUser: Meteor.user(),
+    messages: Messages.find({}, {sort: {createdAt: 1}}).fetch(),
   };
 }, Radium(Chat));

@@ -15,3 +15,9 @@ Meteor.methods({
     Messages.insert(message);
   }
 });
+
+if (Meteor.isServer) {
+  Meteor.publish('messages', function() {
+    return Messages.find();
+  });
+}
