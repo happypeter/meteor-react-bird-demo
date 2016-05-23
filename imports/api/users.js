@@ -17,4 +17,8 @@ if(Meteor.isServer) {
   Meteor.publish('userInfo', function(){
     return Meteor.users.find({_id: this.userId}, { fields: {avatar_url: 1, followers: 1, following: 1, public_repos: 1} });
   });
+
+  Meteor.publish("userStatus", function() {
+    return Meteor.users.find({ "status.online": true });
+  });
 }

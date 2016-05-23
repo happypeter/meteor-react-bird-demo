@@ -6,6 +6,7 @@ import MessageForm from './messages/MessageForm.jsx';
 import MessageList from './messages/MessageList.jsx';
 
 import { Messages } from '../api/messages.js';
+import UserList from './user/UserList.jsx';
 
 class Chat extends Component {
   getStyles() {
@@ -34,6 +35,7 @@ class Chat extends Component {
     let styles = this.getStyles();
     return (
       <div style={styles.root}>
+        <UserList users={this.props.onlineUsers}/>
         <MessageList messages={this.props.messages} />
         <MessageForm currentUser={this.props.currentUser}/>
       </div>
@@ -44,8 +46,10 @@ class Chat extends Component {
 export default createContainer(() => {
   Meteor.subscribe('userInfo');
   Meteor.subscribe("messages");
+  Meteor.subscribe("userStatus");
   return {
     currentUser: Meteor.user(),
     messages: Messages.find({}, {sort: {createdAt: 1}}).fetch(),
+    onlineUsers: Meteor.users.find({}).fetch()
   };
 }, Radium(Chat));
