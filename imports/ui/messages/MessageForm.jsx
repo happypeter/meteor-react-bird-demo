@@ -5,6 +5,17 @@ import Card from 'material-ui/Card';
 import Radium from 'radium';
 
 class MessageForm extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      inputValue: ''
+    };
+  }
+
+  handleChange(e) {
+    this.setState({inputValue: this.refs.message.getValue()});
+  }
+
   getStyles() {
     return {
       card: {
@@ -37,6 +48,9 @@ class MessageForm extends Component {
       <Card style={styles.card}>
         <form style={styles.form}>
           <TextField
+            ref='message'
+            value={this.state.inputValue}
+            onChange={this.handleChange.bind(this)}
             style={styles.textField}
             textareaStyle={styles.textarea}
             hintText="说点儿什么"
